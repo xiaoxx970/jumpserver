@@ -436,7 +436,7 @@ AUTH_LDAP_BIND_DN = 'cn=admin,dc=jumpserver,dc=org'
 AUTH_LDAP_BIND_PASSWORD = ''
 AUTH_LDAP_SEARCH_OU = 'ou=tech,dc=jumpserver,dc=org'
 AUTH_LDAP_SEARCH_FILTER = '(cn=%(user)s)'
-AUTH_LDAP_START_TLS = False
+AUTH_LDAP_START_TLS = True
 AUTH_LDAP_USER_ATTR_MAP = {"username": "cn", "name": "sn", "email": "mail"}
 AUTH_LDAP_GLOBAL_OPTIONS = {
     ldap.OPT_X_TLS_REQUIRE_CERT: ldap.OPT_X_TLS_NEVER,

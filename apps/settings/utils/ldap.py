@@ -1,7 +1,7 @@
 # coding: utf-8
 #
-
-from ldap3 import Server, Connection
+import ssl
+from ldap3 import Server, Connection, Tls
 from django.conf import settings
 from django.core.cache import cache
 from django.utils.translation import ugettext_lazy as _
@@ -77,7 +77,10 @@ class LDAPServerUtil(object):
     def connection(self):
         if self._conn:
             return self._conn
-        server = Server(self.config.server_uri, use_ssl=self.config.use_ssl)
+        tls = Tls(local_private_key_file = '/opt/jumpserver/data/certs/Google_2022_11_18_40607.key',
+                local_certificate_file = '/opt/jumpserver/data/certs/Google_2022_11_18_40607.crt',
+                version = ssl.PROTOCOL_TLSv1)
+        server = Server(self.config.server_uri, use_ssl=self.config.use_ssl, tls=tls)
         conn = Connection(server, self.config.bind_dn, self.config.password)
         conn.bind()
         self._conn = conn
@@ -91,10 +94,11 @@ class LDAPServerUtil(object):
         return None
 
     def paged_cookie(self):
-        if self._paged_size is None:
-            return None
-        cookie = self.connection.result['controls']['1.2.840.113556.1.4.319']['value']['cookie']
-        return cookie
+        # if self._paged_size is None:
+        #     return None
+        # cookie = self.connection.result['controls']['1.2.840.113556.1.4.319']['value']['cookie']
+        # return cookie
+        return None
 
     def get_search_filter_extra(self):
         extra = ''
@@ -137,9 +141,9 @@ class LDAPServerUtil(object):
             logger.info("Search user entries ou: {}".format(search_ou))
             self.search_user_entries_ou(search_ou)
             user_entries.extend(self.connection.entries)
-            while self.paged_cookie():
-                self.search_user_entries_ou(search_ou, self.paged_cookie())
-                user_entries.extend(self.connection.entries)
+            # while self.paged_cookie():
+            #     self.search_user_entries_ou(search_ou, self.paged_cookie())
+            #     user_entries.extend(self.connection.entries)
         return user_entries
 
     def user_entry_to_dict(self, entry):
