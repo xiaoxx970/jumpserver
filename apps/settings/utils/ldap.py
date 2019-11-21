@@ -76,14 +76,12 @@ class LDAPServerUtil(object):
     @property
     def connection(self):
         if self._conn:
-            a = 1
             return self._conn
-        tls = Tls(local_private_key_file = '/opt/jumpserver/data/certs/Google_2022_11_18_40607.key',
-                local_certificate_file = '/opt/jumpserver/data/certs/Google_2022_11_18_40607.crt',
+        tls = Tls(local_private_key_file = '/opt/jumpserver/data/certs/Google.key',
+                local_certificate_file = '/opt/jumpserver/data/certs/Google.crt',
                 version = ssl.PROTOCOL_TLSv1)
         server = Server(self.config.server_uri, use_ssl=self.config.use_ssl, tls=tls)
         conn = Connection(server, self.config.bind_dn, self.config.password)
-        a = 1
         conn.bind()
         self._conn = conn
         return self._conn
