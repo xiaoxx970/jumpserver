@@ -76,10 +76,11 @@ class LDAPServerUtil(object):
     @property
     def connection(self):
         if self._conn:
+            a = 1
             return self._conn
-        a=1
         server = Server(self.config.server_uri, use_ssl=self.config.use_ssl)
         conn = Connection(server, self.config.bind_dn, self.config.password)
+        a = 1
         conn.bind()
         self._conn = conn
         return self._conn
