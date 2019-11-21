@@ -74,7 +74,7 @@ REDIS_PORT: 6379
 
 # LDAP/AD settings
 # LDAP 搜索分页数量
-# AUTH_LDAP_SEARCH_PAGED_SIZE: 1000
+AUTH_LDAP_SEARCH_PAGED_SIZE: 1000
 #
 # 定时同步用户
 # 启用 / 禁用
